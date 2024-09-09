@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage ('Git Checkout') {
       steps {
-        git 'https://github.com/cbabu85/DevOpsAddressBook.git'
+        git branch: 'master', url: 'https://github.com/rakesh1050/SampleApp.git'
       }
   }
     stage (' Build Package') {
@@ -16,8 +16,13 @@ pipeline {
   }
     stage ('Build the Docker Image of my package') {
       steps {
-       sh 'docker build -t cbabu85/addressbook.war .'
+       sh 'docker image build -t rakesh1050/addressbook .'
         }
-      }
+    }
+  stage("Docker Run"){
+            steps{
+                sh "docker container run -itd -p 8090:8080 rakesh1050/addressbook"
+            }
+        }
     }
 }
